@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        # 1. Rota de Autenticação / Login (Porta 8083)
+        - id: login-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/auth/**
+
+        # 2. Rota de Vendas e Pedidos (Porta 8081)
+        - id: venda-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/vendas/**
+
+        # 3. Rota de Catálogo de Lives / Produtos (Porta 8082)
+        - id: produto-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/lives/**
